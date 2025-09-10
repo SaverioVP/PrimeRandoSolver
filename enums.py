@@ -32,6 +32,9 @@ class Items(Enum):
     MISSILE_EXPANSION = auto()
     ENERGY_TANK = auto()
 
+    # Tallon
+    ARTIFACT_CHOZO = auto()
+    ARTIFACT_TRUTH = auto()
     # Chozo
     ARTIFACT_LIFE = auto()
     ARTIFACT_WILD = auto()

@@ -1,0 +1,7 @@
+class GameEvent:
+    def __init__(self, event_type, reqs=None):
+        self.event_type = event_type
+        self.reqs = reqs or []
+
+    def is_triggered(self, inventory: set) -> bool:
+        return all(req in inventory for req in self.reqs)

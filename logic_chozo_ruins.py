@@ -96,6 +96,9 @@ area_logic = {
         doors=[
             Door(Locations.CHOZO_TOTEM_ACCESS),
             Door(Locations.CHOZO_TRANSPORT_ACCESS_NORTH, [Items.MISSILES]),
+        ],
+        events=[
+            GameEvent(GameEvents.HIVE_MECHA_DEFEATED),
         ]
     ),
     Locations.CHOZO_TRANSPORT_ACCESS_NORTH: Location(
@@ -157,11 +160,11 @@ area_logic = {
     ),
     Locations.CHOZO_TOWER_OF_LIGHT: Location(
         pickups=[
-            ItemPickup(Items.WAVEBUSTER, reqs=[Items.MISSILES,Items.SPACE_BOOTS])
+            ItemPickup(Items.WAVEBUSTER, reqs=[Items.MISSILES, (Items.MISSILE_EXPANSION, 7), Items.SPACE_BOOTS])
         ],
         doors=[
             Door(Locations.CHOZO_TOWER_OF_LIGHT_ACCESS, reqs=[Items.WAVE_BEAM]),
-            Door(Locations.CHOZO_TOWER_CHAMBER)
+            Door(Locations.CHOZO_TOWER_CHAMBER, reqs=[Items.WAVE_BEAM])
         ]
     ),
     Locations.CHOZO_TOWER_CHAMBER: Location(
@@ -256,15 +259,22 @@ area_logic = {
     Locations.CHOZO_SUNCHAMBER: Location(
         pickups=[
             ItemPickup(Items.VARIA_SUIT, [GameEvents.FLAAHGRA_DEFEATED]),
-            # Ice Beam required to trigger ghosts; also requires X-Ray Visor to collect Artifact
-            ItemPickup(Items.ARTIFACT_WILD, [GameEvents.FLAAHGRA_DEFEATED, Items.ICE_BEAM, Items.XRAY_VISOR]),
+            # Some version require ice beam to trigger ghosts. this just requires access from the Sun Chamber Access
+            ItemPickup(Items.ARTIFACT_WILD, [GameEvents.FLAAHGRA_DEFEATED]),
+        ],
+        doors=[
+            Door(Locations.CHOZO_SUNCHAMBER_ACCESS, [GameEvents.FLAAHGRA_DEFEATED]),  # cant go backwards without kill boss
+            Door(Location.CHOZO_SUN_TOWER_ACCESS, [GameEvents.FLAAHGRA_DEFEATED])
+        ],
+        events=[
+            GameEvent(GameEvents.FLAAHGRA_DEFEATED, [Items.MISSILES, Items.MORPH_BALL])
         ]
     ),
     Locations.CHOZO_SUN_TOWER: Location(
         doors=[
             Door(Locations.CHOZO_TRANSPORT_TO_MAGMOOR_CAVERNS_NORTH),
-            # Spiderball track and super missile to unlock the blocking thing
-            Door(Locations.CHOZO_SUN_TOWER_ACCESS, [Items.MORPH_BALL, Items.SPIDER_BALL, Items.SUPER_MISSILE]), 
+            # Spiderball track and super missile to unlock the blocking thing, bombs to jump on the track
+            Door(Locations.CHOZO_SUN_TOWER_ACCESS, [Items.MORPH_BALL, Items.SPIDER_BALL, Items.BOMBS, Items.SUPER_MISSILE]), 
         ]
     ),
     Locations.CHOZO_SUN_TOWER_ACCESS: Location(
@@ -361,7 +371,10 @@ area_logic = {
         # To leave you need bombs and to defeat the boss
         doors=[
             Door(Locations.CHOZO_BURN_DOME_ACCESS, [GameEvents.INCINERATOR_DRONE_DEFEATED, Items.MORPH_BALL, Items.BOMBS]),
-        ]
+        ],
+        events=[
+            GameEvent(GameEvents.INCINERATOR_DRONE_DEFEATED, [Items.MISSILES])
+        ],
     ),
     # --- Furnace / Hall of the Elders loop ---
     Locations.CHOZO_WEST_FURNACE_ACCESS: Location(
@@ -392,11 +405,11 @@ area_logic = {
         ]
     ),
     Locations.CHOZO_CROSSWAY: Location(
-        pickups=[ItemPickup(Items.MISSILE_EXPANSION, [Items.MORPH_BALL, Items.BOOST_BALL, Items.SPIDER_BALL])],
+        pickups=[ItemPickup(Items.MISSILE_EXPANSION, [Items.SUPER_MISSILE, Items.MORPH_BALL, Items.BOMBS, Items.BOOST_BALL, Items.SPIDER_BALL])],
         doors=[
             Door(Locations.CHOZO_CROSSWAY_ACCESS_WEST),
             Door(Locations.CHOZO_CROSSWAY_ACCESS_SOUTH, [Items.ICE_BEAM]),
-            Door(Locations.CHOZO_ELDER_HALL_ACCESS, [Items.SUPER_MISSILE, Items.MISSILES]),
+            Door(Locations.CHOZO_ELDER_HALL_ACCESS, [Items.MISSILES, Items.MORPH_BALL, Items.BOOST_BALL]),
         ]
     ),
     Locations.CHOZO_CROSSWAY_ACCESS_SOUTH: Location(

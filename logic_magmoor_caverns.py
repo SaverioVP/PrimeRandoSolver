@@ -2,6 +2,7 @@ from enums import Items, GameEvents, Locations
 from item_pickup import ItemPickup
 from door import Door
 from location import Location
+from game_event import GameEvent
 
 area_logic = {
     Locations.MAGMOOR_TRANSPORT_TO_CHOZO_RUINS_NORTH: Location(
@@ -78,7 +79,10 @@ area_logic = {
     Locations.MAGMOOR_MONITOR_STATION_UPPER: Location(
         doors=[
             Door(Locations.MAGMOOR_MONITOR_STATION_LOWER),
-            Door(Locations.MAGMOOR_MONITOR_STATION_UPPER_LEDGE)
+            Door(Locations.MAGMOOR_MONITOR_STATION_UPPER_LEDGE, reqs=[GameEvents.MONITOR_STATION_MOVED, Items.SPACE_BOOTS])
+        ],
+        events=[
+            GameEvent(GameEvents.MONITOR_STATION_MOVED, reqs=[Items.BOOST_BALL])
         ]
     ),
     Locations.MAGMOOR_MONITOR_STATION_UPPER_LEDGE: Location(
